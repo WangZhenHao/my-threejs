@@ -17,6 +17,7 @@ const canvas = document.querySelector("canvas.threejs");
 
 const renderer = new THREE.WebGLRenderer({
     canvas,
+    antialias: true,
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 // document.body.appendChild( renderer.domElement );
@@ -28,9 +29,15 @@ const material = new THREE.MeshBasicMaterial({ color: "red" });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
+// const maxPixelRatio = Math.min(window.devicePixelRatio, 2);
+// renderer.setPixelRatio(maxPixelRatio);
 camera.position.z = 5;
 // camera.position.x = 2
-
+window.addEventListener("resize", function () {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
 //
 function animate() {
     controls.update();
